@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/ordens-servico")
 public class OrdemServicoController {
@@ -15,7 +17,7 @@ public class OrdemServicoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrdemServico criar(@RequestBody OrdemServico ordemServico){
+    public OrdemServico criar(@Valid @RequestBody OrdemServico ordemServico){
         return gestaoOrdemServico.criar(ordemServico);
     }
 }

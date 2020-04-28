@@ -7,12 +7,20 @@ import java.time.OffsetDateTime;
 
 public class OrdemServicoModel {
     private Long id;
-    private String nome;
+    private ClienteResumoModel cliente;
     private String descricao;
     private BigDecimal preco;
     private StatusOrdemServico status;
     private OffsetDateTime dataAbertura;
     private OffsetDateTime dataFinalizacao;
+
+    public ClienteResumoModel getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteResumoModel cliente) {
+        this.cliente = cliente;
+    }
 
     public Long getId() {
         return id;
@@ -22,13 +30,6 @@ public class OrdemServicoModel {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     public String getDescricao() {
         return descricao;

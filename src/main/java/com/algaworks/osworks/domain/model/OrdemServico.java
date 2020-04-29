@@ -1,17 +1,16 @@
 package com.algaworks.osworks.domain.model;
 
-import com.algaworks.osworks.domain.ValidationGroups;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.algaworks.osworks.api.model.Comentario;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,26 +19,21 @@ public class OrdemServico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Valid
-    @ConvertGroup(from = Default.class, to = ValidationGroups.ClienteId.class)
-    @NotNull
     @ManyToOne
     private Cliente cliente;
 
-    @NotBlank
     private String descricao;
-
-    @NotNull
     private BigDecimal preco;
 
     @Enumerated(EnumType.STRING)
     private StatusOrdemServico status;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private OffsetDateTime dataAbertura;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private OffsetDateTime dataAbertura;
     private OffsetDateTime dataFinalizacao;
+
+    @OneToMany(mappedBy = "ordemServico")
+    private List<Comentario> cometarios = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -108,5 +102,13 @@ public class OrdemServico {
 
     public void setDataFinalizacao(OffsetDateTime dataFinalizacao) {
         this.dataFinalizacao = dataFinalizacao;
+    }
+
+    public List<Comentario> getCometarios() {
+        return cometarios;
+    }
+
+    public void setCometarios(List<Comentario> cometarios) {
+        this.cometarios = cometarios;
     }
 }

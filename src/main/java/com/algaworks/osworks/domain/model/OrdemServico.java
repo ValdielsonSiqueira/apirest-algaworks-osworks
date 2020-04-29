@@ -1,6 +1,7 @@
 package com.algaworks.osworks.domain.model;
 
 import com.algaworks.osworks.api.model.Comentario;
+import com.algaworks.osworks.domain.exception.NegocioException;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -110,5 +111,21 @@ public class OrdemServico {
 
     public void setCometarios(List<Comentario> cometarios) {
         this.cometarios = cometarios;
+    }
+
+    public boolean podeSerFinalizada(){
+        return StatusOrdemServico.ABERTA.equals(getStatus());
+    }
+
+    public boolean naoPodeSerFinalizada(){
+        return !podeSerFinalizada();
+    }
+
+    public void finalizar() {
+        if (naoPodeSerFinalizada()){
+            throw new NegocioException("Ordem de serviço não pode ser finalizar");
+        }
+        setStatus(StatusOrdemServico.FINALIZADA);
+        setDataFinalizacao(OffsetDateTime.now());
     }
 }
